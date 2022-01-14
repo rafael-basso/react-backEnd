@@ -1,0 +1,80 @@
+Para testar no postman:
+
+const users = [
+    'rafael', 
+    'diego', 
+    'cleiton', 
+    'daniel' 
+];
+
+app.get('/', (request, response) => {
+    return response.json({users})
+})
+
+app.post('/', (request, response) => {
+    const data = request.body
+    console.log(data)
+    
+    const user = {
+        name: data.name,
+        passwd: data.passwd
+        // name: "eu",
+        // passwd: "1234"
+    }
+
+    return response.json(user)
+})
+
+//nao esquecer de usar "post" e body "json" e escrever:
+{
+    "name": "rafael",
+    "passwd": "123"
+}
+
+npm install -g typescript 
+npm link typescript
+
+usar nas migrations:
+import {Knex, knex} from 'knex'
+
+*run database:
+npm run knex:migrate
+*insert data (eu alimentando a tabela e nao o usuario) on table:
+npm run knex:seed
+*run project:
+npm run dev
+
+Para testar o {success:true}:
+no postman, usar rota POST, formato JSON e escrever: 
+{
+    "name": "Rafael",
+    "password": "0001"
+}
+// posso visualizar o retorno "success:true" no postman e abrir o BD na tabela "data" que os dados inseridos estarão no BD
+
+**************************************************************
+Adicionar projeto no GitHub:
+1- criar repositorio publico
+2- deletar pasta Git da pasta onde encontra-se o arquivo do projeto React e dentro da pasta do projeto react. No terminal: "rm -rf .git"
+
+//nao precisa realizar este:
+- entrar na pasta onde encontra-se pasta "login" e "server", clicar na aba view/options/view e marcar a opcao "show hidden files, folders and drives".
+- entrar na past do "login", achar a pasta ".git" e apaga-la
+//
+
+3- entrar no servidor, criar arquivo .gitignore e escrever 
+node_modules
+*.sqlite
+ // o gitignore serve para nao subir os arquivos que quero para o GitHub
+4- ir para a pasta Page_Login (onde se encontra o projeto react + server) e dar o comando "git init"
+5- depois que tudo estiver pronto, voltar para pasta Page_Login e dar comando: "git add ."
+6- dar "git commit -m "App" //login e o nome do projeto react // git status para ver, posso adicionar com git add -all <ou o nome do arquivo para ser adicionado>
+7- copiar a url do GitHub e dar o comando "git remote add origin <colar a url aqui>
+8- dar "git push origin master"
+
+********************************************************************
+Deploy app:
+//responsavel por deployment = SRE
+Netlify = para deploy aplicacoes front-end
+Heroku / Digital Ocean = para deploy de aplicaoes back-end
+Usar servidor para hospedar minha aplicacao back-end
