@@ -42,7 +42,7 @@ npm run knex:migrate
 *insert data (eu alimentando a tabela e nao o usuario) on table:
 npm run knex:seed
 *run project:
-npm run dev
+npm run dev OU yarn dev
 
 Para testar o {success:true}:
 no postman, usar rota POST, formato JSON e escrever: 
