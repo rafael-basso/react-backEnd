@@ -38,7 +38,8 @@ usar nas migrations:
 import {Knex, knex} from 'knex'
 
 *run database:
-npm run knex:migrate
+npm run knex:migrate // caso não rodar, atualizar para última versão: npm install ts-node-dev@latest ts-node@latest
+// instalar extension SQLite
 *insert data (eu alimentando a tabela e nao o usuario) on table:
 npm run knex:seed
 *run project:
