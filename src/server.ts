@@ -1,8 +1,6 @@
 import express, { RequestHandler, response } from 'express'
 import cors from 'cors'
 import routes from './routes'
-import { request } from 'http';
-import path from 'path/posix';
 
 console.log('server running');
 
