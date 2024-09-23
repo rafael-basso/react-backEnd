@@ -37,12 +37,13 @@ npm link typescript
 usar nas migrations:
 import {Knex, knex} from 'knex'
 
-*run database:
-npm run knex:migrate // vai criar o database.sqlite
+*run database // para iniciar o banco
+npm run knex:migrate // caso não rodar, atualizar para última versão: npm install ts-node-dev@latest ts-node@latest
+// instalar extension SQLite
 *insert data (eu alimentando a tabela e nao o usuario) on table:
 npm run knex:seed
 *run project:
-npm run dev OU yarn dev
+npm run dev
 
 Para testar o {success:true}:
 no postman, usar rota POST, formato JSON e escrever: 
