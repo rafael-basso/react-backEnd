@@ -5,10 +5,9 @@ RUN npm install
 
 # Set up SQLite database
 RUN npm install sqlite3
-RUN sqlite3 /react-backEnd/src/database/database.sqlite
-
+RUN sqlite3 /app/db.sqlite
 # Copy application code
-COPY . /react-backEnd/
+COPY . /app/
 
 # Compile code
 RUN npm run build
