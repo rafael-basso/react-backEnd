@@ -37,7 +37,7 @@ npm link typescript
 usar nas migrations:
 import {Knex, knex} from 'knex'
 
-*run database // para iniciar o banco
+*run database: // para iniciar o banco
 npm run knex:migrate // caso não rodar, atualizar para última versão: npm install ts-node-dev@latest ts-node@latest
 // instalar extension SQLite
 *insert data (eu alimentando a tabela e nao o usuario) on table:
