@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3331:3331"
+    environment:
+      - DATABASE_URL=sqlite:///app/db.sqlite3
+      - NODE_ENV=production
