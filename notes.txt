@@ -79,5 +79,3 @@ Deploy app:
 Netlify = para deploy aplicacoes front-end
 Heroku / Digital Ocean = para deploy de aplicaoes back-end
 Usar servidor para hospedar minha aplicacao back-end
-
-teste commit
