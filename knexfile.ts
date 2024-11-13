@@ -17,8 +17,10 @@ module.exports = {
     production: {
         client: 'sqlite3',
         connection: {
-          filename: path.join('/tmp', 'database.sqlite')
+            filename: "./src/database/database.sqlite"
         },
-        useNullAsDefault: true
-      }
-}
+        migrations: {
+            directory: './src/database/migrations'
+        }
+    }
+};
