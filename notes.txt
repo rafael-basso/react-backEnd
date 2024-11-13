@@ -74,8 +74,6 @@ node_modules
 8- dar "git push origin master"
 
 ********************************************************************
-Deploy app:
-//responsavel por deployment = SRE
-Netlify = para deploy aplicacoes front-end
-Heroku / Digital Ocean = para deploy de aplicaoes back-end
-Usar servidor para hospedar minha aplicacao back-end
+VERCEL:
+1- a cada deploy, rodar a migration: npm run knex:migrate
+2- fazer o commit na branch da migration atualizada
