@@ -15,4 +15,4 @@ app.use(cors({
 app.use(express.json() as RequestHandler);
 app.use(routes);
 
-// app.listen(3331);
+app.listen(3331);
