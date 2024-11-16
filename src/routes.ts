@@ -64,22 +64,7 @@ routes.post('/', async (request, response) => {
 routes.post('/balance', async (request, response) => {
     const { description, amount, date, id } = request.body
     
-    // const balance = {
-    //     transaction_name: description,
-    //     value: amount,
-    //     date: date,
-    //     idData: id
-    // }
-
-    // const ids =  await knex('balance').insert(balance)
-    
-    // const dataBalance = {
-    //   data_id: id,
-    //   balance_id: ids,
-    // };    
-            
-    // await knex('data_balance').insert(dataBalance)
-    
+    //iniciar o begin tran   
     await knex.transaction(async (trx) => {
         const balance = {
             transaction_name: description,
@@ -88,6 +73,7 @@ routes.post('/balance', async (request, response) => {
             idData: id
         };
 
+        //inserir primeiro na tabela 'balance' e retornar o id
         const [balance_id] = await trx('balance')
             .insert(balance)
             .returning('id');
@@ -97,6 +83,7 @@ routes.post('/balance', async (request, response) => {
             balance_id: balance_id
         };    
                 
+        //inserir na tabela que contém a foreign key
         await trx('data_balance').insert(dataBalance);
     });
 
@@ -122,7 +109,6 @@ routes.delete('/balance/:id', async(request,response) => {
         // await knex('balance').where('id', id).delete()
     
         const result = await knex.transaction(async (trx) => {
-            // First check if the record exists
             const existingBalance = await trx('balance')
                 .where('id', id)
                 .first();
@@ -131,10 +117,12 @@ routes.delete('/balance/:id', async(request,response) => {
                 throw new Error('Nenhum transação encontrada.');
             }
     
+            //deletar foreign key primeiro
             await trx('data_balance')
                 .where('balance_id', id)
                 .delete();
     
+            //deletar dados depois
             const [deleted_id] = await trx('balance')
                 .where('id', id)
                 .delete()
