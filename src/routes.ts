@@ -131,18 +131,16 @@ routes.delete('/balance/:id', async(request,response) => {
                 throw new Error('Nenhum transação encontrada.');
             }
     
-            // Delete from balance table and get the deleted id
-            const [balance_id] = await trx('balance')
+            await trx('data_balance')
+                .where('balance_id', id)
+                .delete();
+    
+            const [deleted_id] = await trx('balance')
                 .where('id', id)
                 .delete()
                 .returning('id');
     
-            // Delete related records from data_balance
-            await trx('data_balance')
-                .where('id', balance_id)
-                .delete();
-    
-            return balance_id;
+            return deleted_id;
         });
     
         return response.json(result);
