@@ -114,13 +114,43 @@ routes.delete('/:id', async (request, response) => {
 });
 
 routes.delete('/balance/:id', async(request,response) => {
-    const id  = Number(request.params.id)
-    //const name = await knex('balance').select('transaction_name')
+    try {
+        const id  = Number(request.params.id)
+        //const name = await knex('balance').select('transaction_name')
+        
+        // await knex('data_balance').where('balance_id', id).delete()
+        // await knex('balance').where('id', id).delete()
     
-    await knex('balance').where('id', id).delete()
-    await knex('data_balance').where('balance_id', id).delete()
-
-    return response.json(id)
+        const result = await knex.transaction(async (trx) => {
+            // First check if the record exists
+            const existingBalance = await trx('balance')
+                .where('id', id)
+                .first();
+                
+            if (!existingBalance) {
+                throw new Error('Nenhum transação encontrada.');
+            }
+    
+            // Delete from balance table and get the deleted id
+            const [balance_id] = await trx('balance')
+                .where('id', id)
+                .delete()
+                .returning('id');
+    
+            // Delete related records from data_balance
+            await trx('data_balance')
+                .where('id', balance_id)
+                .delete();
+    
+            return balance_id;
+        });
+    
+        return response.json(result);
+    }
+    catch(error) {
+        return response.json({message: error});
+    }
+    
 })
 
 
