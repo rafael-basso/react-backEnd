@@ -58,44 +58,49 @@ routes.post('/', async (request, response) => {
         password: password
     })
     
-    //return response.json({ success: true })
     return response.json({ name, password })
 });
-
-// routes.post('/balance', async (request, response) => {
-//     const { description, amount, date } = request.body
-
-//     await knex('balance').insert({
-//         transaction_name: description,
-//         value: amount,
-//         date: date
-//     })
-
-//     return response.json({ description, amount, date })
-// })
 
 routes.post('/balance', async (request, response) => {
     const { description, amount, date, id } = request.body
     
-    const balance = {
-        transaction_name: description,
-        value: amount,
-        date: date,
-        idData: id
-    }
+    // const balance = {
+    //     transaction_name: description,
+    //     value: amount,
+    //     date: date,
+    //     idData: id
+    // }
 
-    const ids =  await knex('balance').insert(balance)
+    // const ids =  await knex('balance').insert(balance)
     
-    const dataBalance = {
-      data_id: id,
-      balance_id: ids,
-    };    
+    // const dataBalance = {
+    //   data_id: id,
+    //   balance_id: ids,
+    // };    
             
-    await knex('data_balance').insert(dataBalance)
+    // await knex('data_balance').insert(dataBalance)
     
-    //await trx.commit()
+    await knex.transaction(async (trx) => {
+        const balance = {
+            transaction_name: description,
+            value: amount,
+            date: date,
+            idData: id
+        };
 
-    return response.json( { balance, dataBalance })
+        const [balance_id] = await trx('balance')
+            .insert(balance)
+            .returning('id');
+
+        const dataBalance = {
+            data_id: id,
+            balance_id: balance_id
+        };    
+                
+        await trx('data_balance').insert(dataBalance);
+    });
+
+    return response.json( { success: true, message: "Data saved successfully!" })
 });
 
 routes.delete('/:id', async (request, response) => {
