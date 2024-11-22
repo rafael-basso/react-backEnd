@@ -16,7 +16,7 @@ module.exports = {
     },
     production: {
         client: 'pg',
-        connection: "postgresql://react_db_owner:HtIjn7RlZc9o@ep-shiny-cake-a5143noi.us-east-2.aws.neon.tech/react_db?sslmode=require",
+        connection: process.env.CONNECTION_STRING,
         migrations: {
             directory: path.resolve(__dirname, 'src', 'database', 'migrations')
         }
